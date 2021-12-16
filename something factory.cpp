@@ -19,7 +19,7 @@ int bc[4] = {1,2,3,4};
 int n = 0;
 long int worker_worth;
 long int worker_help = 1;
-long int manager_n = 100;//manager number multiplier
+long long int manager_n = 100;//manager number multiplier
 long int debt_payment;
 long long int day_counter = -1;
 long long int total_money = 0;
@@ -41,6 +41,7 @@ bool w = false;
 bool ma = false;
 bool sb = false;
 bool else_loop = true;
+bool bbad = false;
 int k;
 float product_worth;
 float product_set;
@@ -117,7 +118,7 @@ tax_day--;
 debt_day--;
 mon = true;
 }
-if(money >= debt){
+if(debt <= 0){
 hark = false;
 game_start = false;
 }
@@ -133,7 +134,11 @@ tax_day ++;
 while(buy_menu_start){
   else_loop = true;
   while(else_loop == true){
-cout << "\033[2J\033[0;0H\nWhat would you like to buy?\nMoney left $" << money <<"\n\n";
+cout << "\033[2J\033[0;0H";
+if(bbad == true){
+  cout << "You do not have enough money.";
+  }
+cout << "\nWhat would you like to buy?\nMoney left $" << money <<"\n\n";
 if(product_set <= 1000){
 cout << bc[n] << ". Friend               +" << product_set << "     -$" << product_set * 10;
 n++;
@@ -242,8 +247,8 @@ if(ma == true){
   subb = manager_n;
   
   if(money < subb){
-    cout << "\033[2J\033[0;0H\nYou do not have enough money\n";
     whilen = 0;
+    bbad = true;
    }
    else{
   money = money - subb;
@@ -259,7 +264,7 @@ else{
 }
 if(money < subb){
   if(ma != true){
-  cout << "\033[2J\033[0;0H\nYou do not have enough money.\n";
+  bbad = true;
   }
 }
 else{
@@ -319,8 +324,8 @@ sb = true;
 }
 hark = true;
 }
-if(debt == 0){
-cout << endl << "\nWow! You actually paid off your" << start_debt << "debt! Who knew your" << product << "would actually sell? And it only took you "<< day_counter << "days. ";
+if(debt <= 0){
+cout << endl << "\033[2J\033[0;0H\nWow! You actually paid off your $" << start_debt << " debt! Who knew your " << product << " would actually sell? And it only took you "<< day_counter << " days. ";
 }
 
 }
